@@ -1,18 +1,36 @@
-canvas {
-    display: flex;
-    border: 3px solid #FF355E;
-     background-color: black;
-     
-  }
 
   body {
     display: flex;
-    flex-direction: column;
+    flex-direction: column ;
     background-image: url(../images/fundo-da-parede-de-tijolo.jpg);
     background-repeat: no-repeat;
     background-size: cover;
     justify-content: center;
     background-color: #010a01;
+  }
+
+  .intro-game {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+  }
+
+  #logo-game {
+    height: 300px;
+    width: 300px;
+    border-radius: 30px;
+    display: flex;
+    justify-items: center;
+  }
+
+  #arcade-logo {
+    height: 300px;
+    width: 300px;
+  }
+
+  #game-night {
+    height: 300px;
+    width: 350px;
   }
 
   .neonText {
@@ -31,13 +49,13 @@ canvas {
   
         text-shadow:
         0 0 4px #fff,
-        0 0 11px #fff,
-        0 0 19px #fff,
-        0 0 40px #0fa,
-        0 0 80px #0fa,
-        0 0 90px #0fa,
-        0 0 100px #0fa,
-        0 0 150px #0fa;
+      0 0 10px #fff,
+      0 0 18px #fff,
+      0 0 38px #f09,
+      0 0 73px #f09,
+      0 0 80px #f09,
+      0 0 94px #f09,
+      0 0 140px #f09;
     
     }
     
@@ -46,8 +64,9 @@ canvas {
     }    
   }
   
-  
-  /* Additional styling */
+  a {
+    text-decoration: none;
+  }
     
   h2 {
    font-size: 1.8rem;
@@ -61,43 +80,98 @@ canvas {
     text-transform: uppercase;
     font-weight: 400;
     border: 0.2rem solid #fff;
-    border:  solid #fff;
-      border-radius: 2rem;
-      padding: 0.4em;
-      box-shadow: 0 0 .2rem #fff,
+    border-radius: 2rem;
+    padding: 0.4em;
+    box-shadow: 0 0 .2rem #fff,
               0 0 .2rem #fff,
               0 0 2rem #bc13fe,
               0 0 0.8rem #bc13fe,
               0 0 1.5rem #bc13fe,
               inset 0 0 1.3rem #bc13fe;
+    animation: none;
   }
 
-  #menu ul {
-    display: inline;
-    flex-wrap: nowrap;
+  #menu {
+    display:flex;
     flex-direction: row;
-    align-items: flex-start;
-    padding:0px;
-    margin:0px;
+    justify-content: space-around;
   }
-
-  #menu ul li{
-    display: inline;
-  }
-
+  
   #aboutMe {
-    font-size: 60px;
-    margin-left: 50px;
+    font-size: 50px;
+    margin-left: 70px;
+    
+  }
+
+  #about-me-title {
+    margin-left: 350px;
+    width: 50%;
   }
 
   #profile-photo {
     width: 25%;
     height: 25%;
     border-radius: 50%;
-    margin-left: 30px;
+    margin-left: 50px;
   }
 
   #github {
     width: 10%;
     height: 10%;
+  }
+
+  #game-area {
+    display: flex;
+    justify-content: center;
+  }
+
+  #game-area canvas {
+    border: 1px solid pink;
+    background-color: black;
+  }
+
+  #home-link {
+   margin-left: 600px;
+    width: 20%;
+  }
+
+  .message {
+    display: flex;
+    flex-direction: row;
+  }
+
+  #profile-text {
+    font-size: 30px;
+    margin-left: 70px;
+    line-height: 1.5;
+  }
+
+  #followMe {
+    border-radius: 30px;
+    width: 600px;
+    height: 250px;
+  }
+
+  .buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding: 10px;    
+  }
+
+  .btn-start {
+    height: 50px;
+    width: 10%;
+  }
+
+  .btn-reset {
+    height: 50px;
+    width: 10%
+  }
+
+  .music {
+    height: 50px;
+    width: 100px;
+    border-radius: 30px;
+    margin-left: 40px;
   }

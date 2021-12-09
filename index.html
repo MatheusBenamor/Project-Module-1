@@ -10,27 +10,40 @@
   </head>
   <body>
       <header>
-        <EMBED class="music" SRC="sounds/561391__bloodpixelhero__game-music-time-of-action.wav" volume= "20" AUTOSTART= LOOP="TRUE"/>
+        <br>
+        <br>
+        <br>
+        <div class="intro-game">
+          <img id="arcade-logo" src="images/arcade_logo.png" alt="control-img">
+        <img id="logo-game" src="images/logo-game.png" alt="logo">
+        <img id="game-night" src="images/game-night.png" alt="game-night">
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
         <div>
         <nav id="menu">
-            <ul>
-           <li><h2 class="neonText"> Instructions</h2></li>
-            
-           <li><h2 a href = "about-me.html" class="neonText"> About me </a></h2></li>
-          </ul>
+          <h2 class="neonText"> How to play</h2>
+          <h2><a href = "about-me.html" class="neonText"> About me </a></h2>
+          
         </nav>
       </div>
       </header>
 
       <br>
     
-<section>
+    <section id="game-area"></section>
 
-    <canvas id="canvas" width="800" height="300"></canvas>
-    <!-- include js file after DOM is loaded; 
-            if included earlier, you have to use window.onload = function(){ ... } 
-            approach in your intro.js file -->
-        </section>
+    <div class="buttons" class="neonText">
+    <button type="button" class="btn-start">Start</button>
+    <button type="button" class="btn-reset">Reset</button>
+  </div>
+
+    <div>
+      <EMBED class="music" SRC="sounds/561391__bloodpixelhero__game-music-time-of-action.wav" volume= "20" AUTOSTART= LOOP="TRUE"/>
+    </div>
+    
     <script src="javascript.js"></script>
 
   </body>
