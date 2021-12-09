@@ -1,0 +1,103 @@
+canvas {
+    display: flex;
+    border: 3px solid #FF355E;
+     background-color: black;
+     
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    background-image: url(../images/fundo-da-parede-de-tijolo.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    justify-content: center;
+    background-color: #010a01;
+  }
+
+  .neonText {
+    animation: flicker 1.5s infinite alternate;
+    color: #fff;
+  }
+  
+  h1 {
+    font-size: 4.2rem;    
+  }
+  
+  /* Flickering animation */
+  @keyframes flicker {
+      
+    0%, 18%, 22%, 25%, 53%, 57%, 100% {
+  
+        text-shadow:
+        0 0 4px #fff,
+        0 0 11px #fff,
+        0 0 19px #fff,
+        0 0 40px #0fa,
+        0 0 80px #0fa,
+        0 0 90px #0fa,
+        0 0 100px #0fa,
+        0 0 150px #0fa;
+    
+    }
+    
+    20%, 24%, 55% {        
+        text-shadow: none;
+    }    
+  }
+  
+  
+  /* Additional styling */
+    
+  h2 {
+   font-size: 1.8rem;
+  }
+  .container {
+    margin-top: 20vh;
+  }
+    
+  h1, h2 {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 400;
+    border: 0.2rem solid #fff;
+    border:  solid #fff;
+      border-radius: 2rem;
+      padding: 0.4em;
+      box-shadow: 0 0 .2rem #fff,
+              0 0 .2rem #fff,
+              0 0 2rem #bc13fe,
+              0 0 0.8rem #bc13fe,
+              0 0 1.5rem #bc13fe,
+              inset 0 0 1.3rem #bc13fe;
+  }
+
+  #menu ul {
+    display: inline;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: flex-start;
+    padding:0px;
+    margin:0px;
+  }
+
+  #menu ul li{
+    display: inline;
+  }
+
+  #aboutMe {
+    font-size: 60px;
+    margin-left: 50px;
+  }
+
+  #profile-photo {
+    width: 25%;
+    height: 25%;
+    border-radius: 50%;
+    margin-left: 30px;
+  }
+
+  #github {
+    width: 10%;
+    height: 10%;
+  }
