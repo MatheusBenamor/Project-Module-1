@@ -3,6 +3,7 @@ class Game {
     this.canvas = document.createElement("canvas");
     this.frames = 0;
     this.obstacles = [];
+    this.points = 0;
   }
   start = () => {
     this.canvas.width = 626;
@@ -16,6 +17,19 @@ class Game {
   clear = () => {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
   };
+
+  stop = () => {
+    clearInterval(this.interval);
+  }
+
+  score = () => {
+    this.points = Math.floor(this.frames / 5);
+    this.ctx.font = '18px serif';
+    this.ctx.textAlign = 'end';
+    this.ctx.fillStyle = 'white';
+    this.ctx.fillText(`Score: ${this.points}`, this.canvas.width - 30, 50);
+  }
+  
 }
 
 const game = new Game();
@@ -66,19 +80,45 @@ class Component {
     this.posX += this.speedX;
     this.posY += this.speedY;
   };
+
+  left = () => {
+    return this.posX;
+  };
+
+  right = () => {
+    return this.posX + this.width;
+  };
+
+  top = () => {
+    return this.posY;
+  };
+
+  bottom = () => {
+    return this.posY + this.height;
+  };
+
+  crashWith(obst) {
+    const freeLeft = this.left() > obst.right();
+    const freeRight = this.right() < obst.left();
+    const freeTop = this.top() > obst.bottom();
+    const freeBottom = this.bottom() < obst.top();
+    return !(freeLeft || freeRight || freeTop || freeBottom);
+}
 }
 
 const player = new Component(40, 40, "#FFFF66", 10, 210);
 const circle = new Component();
 const triangle = new Component();
 
-//função responsável pelo movimento
+
 function updateGameArea() {
   game.clear();
   backgroundImage.move();
   backgroundImage.draw();
   player.update();
   updateObstacles();
+  game.score();
+  checkGameOver ();
 }
 
 function createObstacle() {
@@ -86,18 +126,27 @@ function createObstacle() {
   const posY = 210;
   const height = player.height;
   const width = player.width;
-  const color = player.color;
+  const color = '#FFFF66';
   game.obstacles.push(new Component(width, height, color, posX, posY));
 }
 
 function updateObstacles () {
     game.frames += 1;
-    if (game.frames % 120 === 0) {
+    if (game.frames % 240 === 0) {
         createObstacle();
     }
     for (let obstacle of game.obstacles) {
         obstacle.posX -= 1;
         obstacle.update();
+    }
+}
+
+function checkGameOver () {
+    const crashed = game.obstacles.some((obstacle) => {
+        return player.crashWith(obstacle)
+    })
+    if (crashed) {
+    game.stop();
     }
 }
 
