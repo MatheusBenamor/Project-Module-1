@@ -78,10 +78,27 @@ function updateGameArea() {
   backgroundImage.move();
   backgroundImage.draw();
   player.update();
+  updateObstacles();
 }
 
 function createObstacle() {
   const posX = game.canvas.width;
+  const posY = 210;
+  const height = player.height;
+  const width = player.width;
+  const color = player.color;
+  game.obstacles.push(new Component(width, height, color, posX, posY));
+}
+
+function updateObstacles () {
+    game.frames += 1;
+    if (game.frames % 120 === 0) {
+        createObstacle();
+    }
+    for (let obstacle of game.obstacles) {
+        obstacle.posX -= 1;
+        obstacle.update();
+    }
 }
 
 game.start();
