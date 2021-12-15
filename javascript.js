@@ -60,61 +60,58 @@ const backgroundImage = {
 
 class Component {
   constructor(x, y) {
-    this.currentShape = "square";
+    this.currentShape = "heart";
     this.posX = x;
     this.posY = y;
-    this.speedX = 0;
-    this.speedY = 0;
     this.ctx = game.ctx;
-    //Não preciso do speed pois minhas formas ficarão paradas
-  }
+    }
 
-square = () => {
+   square = () => {
     const height = 40;
     const width = 40;
     const color = "#FFFF66";
     const ctx = game.ctx;
     ctx.fillStyle = color;
     ctx.fillRect(this.posX, this.posY, width, height);
-}
+    }
 
     circle = () => {
-        let x = this.posX + 20;
-        let y = this.posY + 20;
-        const ctx = game.ctx;
-        ctx.beginPath();
-        ctx.fillStyle = '#50BFE6'
-        ctx.arc(x, y, 25, 0, 2 * Math.PI);
-        ctx.fill ();
+    let x = this.posX + 20;
+    let y = this.posY + 20;
+    const ctx = game.ctx;
+    ctx.beginPath();
+    ctx.fillStyle = '#50BFE6'
+    ctx.arc(x, y, 25, 0, 2 * Math.PI);
+    ctx.fill ();
     }
     
     triangle = () => {
         
-        let x = this.posX + 20;
-        let y = this.posY;
-        const ctx = game.ctx;
-        ctx.fillStyle = "green";
-        ctx.beginPath();
-        ctx.moveTo(x,y);
-        ctx.lineTo(x - 25, y + 50);
-        ctx.lineTo(x + 25,y + 50);
-        ctx.fill();
+    let x = this.posX + 20;
+    let y = this.posY - 10;
+    const ctx = game.ctx;
+    ctx.fillStyle = "green";
+    ctx.beginPath();
+    ctx.moveTo(x,y);
+    ctx.lineTo(x - 25, y + 50);
+    ctx.lineTo(x + 25,y + 50);
+    ctx.fill();
     }
     
     heart = () => {
-        let x = this.posX;
-        let y = this.posY;
-        const ctx = game.ctx;
-        ctx.beginPath();
-        ctx.moveTo(x,y);
-        ctx.fillStyle = '#FF355E';
-        ctx.bezierCurveTo(x - 37.5, y - 21.5, x - 40, y - 27.5, x - 50, y - 27.5);
-        ctx.bezierCurveTo(x - 65, y - 27.5, x - 65, y - 8.75, x - 65, y - 8.75);
-        ctx.bezierCurveTo(x - 65, y, x - 55, y + 11, x - 37.5, y + 20);
-        ctx.bezierCurveTo(x - 20, y + 11, x - 10, y - 27.5, x - 25, y - 22);
-        ctx.bezierCurveTo(x - 10, y - 8.75,  x - 10, y - 27.5, x - 25, y - 27.5);
-        ctx.bezierCurveTo(x - 32.5, y - 27.5, x - 37.5, y - 21.5, x - 37.5, y - 22);
-        ctx.fill();
+    let x = this.posX + 60;
+    let y = this.posY + 20;
+    const ctx = game.ctx;
+    ctx.beginPath();
+    ctx.moveTo(x,y);
+    ctx.fillStyle = '#FF355E';
+    ctx.bezierCurveTo(x - 37.5, y - 21.5, x - 40, y - 27.5, x - 50, y - 27.5);
+    ctx.bezierCurveTo(x - 65, y - 27.5, x - 65, y - 8.75, x - 65, y - 8.75);
+    ctx.bezierCurveTo(x - 65, y, x - 55, y + 11, x - 37.5, y + 20);
+    ctx.bezierCurveTo(x - 20, y + 11, x - 10, y, x - 10, y - 8.75);
+    ctx.bezierCurveTo(x - 10, y - 8.75,  x - 10, y - 27.5, x - 25, y - 27.5);
+    ctx.bezierCurveTo(x - 32.5, y - 27.5, x - 37.5, y - 21.5, x - 37.5, y - 22);
+    ctx.fill();
     }
 
   update = () => {
@@ -158,6 +155,25 @@ player["posX"]
 player.update()
 player["update"]()*/
 
+class Walls {
+    constructor(x, y){
+    this.posX = x;
+    this.posY = y;
+    this.img = new Image()
+    this.img.src = 'images/wall.square.png';
+}
+squareWall = () => {
+    this.posX = x;
+    this.posY = y;
+    
+}
+draw(){
+    ctx.drawImage(this.img, this.x, this.y)
+}
+move(){
+    this.y = this.y + gameArea.speed
+}
+}
 
 
 
@@ -245,6 +261,9 @@ window.addEventListener("load", () => {
         break;
       case "d":
         player.currentShape = "triangle";
+        break;
+      case "w":
+        player.currentShape = "heart";
         break;
     }
   });
