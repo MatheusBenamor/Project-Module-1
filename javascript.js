@@ -13,7 +13,7 @@ window.onload = () => {
   triangleWall.src = "images/wall.triangle.png";
   
   const circleWall = new Image();
-  circleWall.src = "images/wall.triangle.png";
+  circleWall.src = "images/wall.circle.png";
   
   const heartWall = new Image();
   heartWall.src = "images/wall.heart.png";
@@ -34,6 +34,7 @@ class Game {
     this.frames = 0;
     this.obstacles = [];
     this.points = 0;
+    this.speed = 3;
   }
   start = () => {
     this.canvas.width = 626;
@@ -188,48 +189,71 @@ player["update"]()*/
 
 //Obstáculos
 class Wall {
-  constructor(x, y) {
+  constructor(x, y, currentWall) {
     this.ctx = game.ctx;
     this.posX = x;
     this.posY = y;
+    //this.currentWall = currentWall;
+    this[currentWall]();
   }
 
   squareWall = () => {
-    this.posX = x;
-    this.posY = y;
-    this.img.src = "images/wall.square.png";
-  };
+    this.img = squareWall;
+ };
 
   circleWall = () => {
-    this.posX = x;
-    this.posY = y;
-    this.img.src = "images/wall.circle.png";
+    this.img = circleWall;
   };
 
   triangleWall = () => {
-    this.posX = x;
-    this.posY = y;
-    this.img.src = "images/wall.triangle.png";
+    this.img = triangleWall;
   };
   heartWall = () => {
-    this.posX = x;
-    this.posY = y;
-    this.img.src = "images/wall.heart.png";
+    this.img = heartWall;
   };
   draw() {
-    this.game.ctx.drawImage(this.img, this.posX, this.posY);
+    game.ctx.drawImage(this.img, this.posX, this.posY);
   }
   move() {
-    this.y = this.y + gameArea.speed;
+    this.posX = this.posX - game.speed;
   }
 }
+
+function createWall() {
+const wall = new Wall (game.canvas.width, 150, "triangleWall")
+game.obstacles.push(wall)
+}
+
+function updateWalls() {
+    game.frames += 1;
+if (game.frames % 240 === 0) {
+    createWall();
+}
+for (let obstacle of game.obstacles) {
+    obstacle.move();
+    obstacle.draw();
+}
+}
+
+function selectRandom (obstacles) {
+    let randomWall = obstacles[Math.floor(Math.random() * obstacles.length)]
+    return randomWall;
+}
+
+function selectWall () {
+    let chooseWall = selectRandom(game.obstacles);
+    return chooseWall;
+}
+
 
 function updateGameArea() {
   game.clear();
   backgroundImage.move();
   backgroundImage.draw();
-  player.update();
+  game.score();
+  updateWalls();
   //updateObstacles();
+  player.update();
   game.score();
   checkGameOver();
 }
@@ -254,6 +278,7 @@ function updateGameArea() {
         obstacle.update();
     }
 }*/
+
 
 function checkGameOver() {
   const crashed = game.obstacles.some((obstacle) => {
