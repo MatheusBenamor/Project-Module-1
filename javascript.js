@@ -1,3 +1,33 @@
+//Botão Start
+window.onload = () => {
+    document.getElementById("btn-start").onclick = () => {
+      game.start();
+    };
+  };
+  
+  //Imagens
+  const squareWall = new Image();
+  squareWall.src = "images/wall.square.png";
+  
+  const triangleWall = new Image();
+  triangleWall.src = "images/wall.triangle.png";
+  
+  const circleWall = new Image();
+  circleWall.src = "images/wall.triangle.png";
+  
+  const heartWall = new Image();
+  heartWall.src = "images/wall.heart.png";
+  
+  const gameOverImg = new Image();
+  gameOverImg.src = "images/game-over.PNG"
+  
+  //Áudios
+  const crashSound = new Audio();
+  crashSound.src = "sounds/mixkit-arcade-retro-game-over-213.wav";
+  
+  const gameOverSound = new Audio();
+  gameOverSound.src = "sounds/mixkit-falling-game-over-1942.wav";
+
 class Game {
   constructor() {
     this.canvas = document.createElement("canvas");
@@ -59,7 +89,7 @@ const backgroundImage = {
   },
 };
 
-//Forms
+//Formas
 class Component {
   constructor(x, y) {
     this.currentShape = "heart";
@@ -156,54 +186,74 @@ player["posX"]
 player.update()
 player["update"]()*/
 
-class Walls {
+//Obstáculos
+class Wall {
   constructor(x, y) {
+    this.ctx = game.ctx;
     this.posX = x;
     this.posY = y;
-    this.img = new Image();
-    ctx.drawImage(image, dx, dy);
   }
+
   squareWall = () => {
     this.posX = x;
     this.posY = y;
     this.img.src = "images/wall.square.png";
   };
+
+  circleWall = () => {
+    this.posX = x;
+    this.posY = y;
+    this.img.src = "images/wall.circle.png";
+  };
+
+  triangleWall = () => {
+    this.posX = x;
+    this.posY = y;
+    this.img.src = "images/wall.triangle.png";
+  };
+  heartWall = () => {
+    this.posX = x;
+    this.posY = y;
+    this.img.src = "images/wall.heart.png";
+  };
   draw() {
-    ctx.drawImage(this.img, this.x, this.y);
+    this.game.ctx.drawImage(this.img, this.posX, this.posY);
   }
   move() {
     this.y = this.y + gameArea.speed;
   }
 }
 
-function checkShape() {}
-
 function updateGameArea() {
   game.clear();
   backgroundImage.move();
   backgroundImage.draw();
   player.update();
-  updateObstacles();
+  //updateObstacles();
   game.score();
   checkGameOver();
 }
 
-function createObstacle() {
-  const x = game.canvas.width;
-  const y = 180;
-  game.obstacles.push(new Component(x, y));
-}
+/*function checkColision {
+    if player.currentShape = "square" {
+        continue
+    } else {
+        checkGameOver();
+    }
+}*/
 
-function updateObstacles() {
-  game.frames += 1;
-  if (game.frames % 240 === 0) {
-    createObstacle();
-  }
-  for (let obstacle of game.obstacles) {
-    obstacle.posX -= 1;
-    obstacle.update();
-  }
-}
+
+//Se desativar isso, os pontos param de contar
+/*function updateObstacles () {
+    game.frames += 1;
+    if (game.frames % 240 === 0) {
+        createObstacle();
+    }
+    for (let obstacle of game.obstacles) {
+        obstacle.posX -= 1;
+        obstacle.update();
+    }
+}*/
 
 function checkGameOver() {
   const crashed = game.obstacles.some((obstacle) => {
@@ -219,25 +269,10 @@ function checkGameOver() {
   }
 }
 
-function gameOverScreen() {
-  this.endImg.src = "images/istockphoto-1048450814-170667a.jpg";
-}
 
 //game.start();
 
-//Começar Jogo
-window.onload = () => {
-  document.getElementById("btn-start").onclick = () => {
-    game.start();
-  };
-};
 
-//Áudios
-const crashSound = new Audio();
-crashSound.src = "sounds/mixkit-arcade-retro-game-over-213.wav";
-
-const gameOverSound = new Audio();
-gameOverSound.src = "sounds/mixkit-falling-game-over-1942.wav";
 
 //Comandos
 window.addEventListener("load", () => {
