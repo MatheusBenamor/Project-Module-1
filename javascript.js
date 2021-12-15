@@ -20,103 +20,104 @@ class Game {
 
   stop = () => {
     clearInterval(this.interval);
-  }
+  };
 
   score = () => {
     this.points = Math.floor(this.frames / 5);
-    this.ctx.font = '18px serif';
-    this.ctx.textAlign = 'end';
-    this.ctx.fillStyle = 'white';
+    this.ctx.font = "18px serif";
+    this.ctx.textAlign = "end";
+    this.ctx.fillStyle = "white";
     this.ctx.fillText(`Score: ${this.points}`, this.canvas.width - 30, 50);
-  }
-  
+  };
 }
 
 const game = new Game();
 
+//Background
 const img = new Image();
-img.src = 'https://image.freepik.com/free-vector/pink-neon-background_53876-91656.jpg';
+img.src =
+  "https://image.freepik.com/free-vector/pink-neon-background_53876-91656.jpg";
 
 const backgroundImage = {
-    img: img,
-    x: 0,
-    y: -100,
-    speed: -3,
-  
-    move: function() {
-      this.x += this.speed;
-      this.x %= game.canvas.width;
-    },
-  
-    draw: function() {
-      game.ctx.drawImage(this.img, this.x, this.y);
-      if (this.speed < 0) {
-        game.ctx.drawImage(this.img, this.x + this.img.width, this.y);
-      } else {
-        game.ctx.drawImage(this.img, this.x - this.img.width, this.y);
-      }
-    },
-  };
+  img: img,
+  x: 0,
+  y: -100,
+  speed: -3,
 
+  move: function () {
+    this.x += this.speed;
+    this.x %= game.canvas.width;
+  },
+
+  draw: function () {
+    game.ctx.drawImage(this.img, this.x, this.y);
+    if (this.speed < 0) {
+      game.ctx.drawImage(this.img, this.x + this.img.width, this.y);
+    } else {
+      game.ctx.drawImage(this.img, this.x - this.img.width, this.y);
+    }
+  },
+};
+
+//Forms
 class Component {
   constructor(x, y) {
     this.currentShape = "heart";
     this.posX = x;
     this.posY = y;
     this.ctx = game.ctx;
-    }
+  }
 
-   square = () => {
+  square = () => {
     const height = 40;
     const width = 40;
     const color = "#FFFF66";
     const ctx = game.ctx;
     ctx.fillStyle = color;
     ctx.fillRect(this.posX, this.posY, width, height);
-    }
+  };
 
-    circle = () => {
+  circle = () => {
     let x = this.posX + 20;
     let y = this.posY + 20;
     const ctx = game.ctx;
     ctx.beginPath();
-    ctx.fillStyle = '#50BFE6'
+    ctx.fillStyle = "#50BFE6";
     ctx.arc(x, y, 25, 0, 2 * Math.PI);
-    ctx.fill ();
-    }
-    
-    triangle = () => {
-        
+    ctx.fill();
+  };
+
+  triangle = () => {
     let x = this.posX + 20;
     let y = this.posY - 10;
     const ctx = game.ctx;
     ctx.fillStyle = "green";
     ctx.beginPath();
-    ctx.moveTo(x,y);
+    ctx.moveTo(x, y);
     ctx.lineTo(x - 25, y + 50);
-    ctx.lineTo(x + 25,y + 50);
+    ctx.lineTo(x + 25, y + 50);
     ctx.fill();
-    }
-    
-    heart = () => {
+  };
+
+  heart = () => {
     let x = this.posX + 60;
     let y = this.posY + 20;
     const ctx = game.ctx;
     ctx.beginPath();
-    ctx.moveTo(x,y);
-    ctx.fillStyle = '#FF355E';
+    ctx.moveTo(x, y);
+    ctx.fillStyle = "#FF355E";
     ctx.bezierCurveTo(x - 37.5, y - 21.5, x - 40, y - 27.5, x - 50, y - 27.5);
     ctx.bezierCurveTo(x - 65, y - 27.5, x - 65, y - 8.75, x - 65, y - 8.75);
     ctx.bezierCurveTo(x - 65, y, x - 55, y + 11, x - 37.5, y + 20);
     ctx.bezierCurveTo(x - 20, y + 11, x - 10, y, x - 10, y - 8.75);
-    ctx.bezierCurveTo(x - 10, y - 8.75,  x - 10, y - 27.5, x - 25, y - 27.5);
+    ctx.bezierCurveTo(x - 10, y - 8.75, x - 10, y - 27.5, x - 25, y - 27.5);
     ctx.bezierCurveTo(x - 32.5, y - 27.5, x - 37.5, y - 21.5, x - 37.5, y - 22);
     ctx.fill();
-    }
+  };
 
   update = () => {
     //if ou switch
-    this[this.currentShape]()
+    this[this.currentShape]();
   };
 
   newPos = () => {
@@ -146,7 +147,7 @@ class Component {
     const freeTop = this.top() > obst.bottom();
     const freeBottom = this.bottom() < obst.top();
     return !(freeLeft || freeRight || freeTop || freeBottom);
-}
+  };
 }
 
 const player = new Component(10, 210);
@@ -156,31 +157,26 @@ player.update()
 player["update"]()*/
 
 class Walls {
-    constructor(x, y){
+  constructor(x, y) {
     this.posX = x;
     this.posY = y;
-    this.img = new Image()
-    this.img.src = 'images/wall.square.png';
-}
-squareWall = () => {
+    this.img = new Image();
+    ctx.drawImage(image, dx, dy);
+  }
+  squareWall = () => {
     this.posX = x;
     this.posY = y;
-    
-}
-draw(){
-    ctx.drawImage(this.img, this.x, this.y)
-}
-move(){
-    this.y = this.y + gameArea.speed
-}
-}
-
-
-
-function checkShape() {
-    
+    this.img.src = "images/wall.square.png";
+  };
+  draw() {
+    ctx.drawImage(this.img, this.x, this.y);
+  }
+  move() {
+    this.y = this.y + gameArea.speed;
+  }
 }
 
+function checkShape() {}
 
 function updateGameArea() {
   game.clear();
@@ -189,7 +185,7 @@ function updateGameArea() {
   player.update();
   updateObstacles();
   game.score();
-  checkGameOver ();
+  checkGameOver();
 }
 
 function createObstacle() {
@@ -198,56 +194,50 @@ function createObstacle() {
   game.obstacles.push(new Component(x, y));
 }
 
-function updateObstacles () {
-    game.frames += 1;
-    if (game.frames % 240 === 0) {
-        createObstacle();
-    }
-    for (let obstacle of game.obstacles) {
-        obstacle.posX -= 1;
-        obstacle.update();
-    }
+function updateObstacles() {
+  game.frames += 1;
+  if (game.frames % 240 === 0) {
+    createObstacle();
+  }
+  for (let obstacle of game.obstacles) {
+    obstacle.posX -= 1;
+    obstacle.update();
+  }
 }
 
-function checkGameOver () {
-    const crashed = game.obstacles.some((obstacle) => {
-        return player.crashWith(obstacle)
-    })
-    if (crashed) {
+function checkGameOver() {
+  const crashed = game.obstacles.some((obstacle) => {
+    return player.crashWith(obstacle);
+  });
+  if (crashed) {
     game.stop();
     crashSound.play();
     game.clear();
     gameOverSound.play();
     const imgGameOver = new Image();
-    imgGameOver.src = "https://media.istockphoto.com/vectors/neon-inscription-of-game-over-vector-vector-id1048450814?k=20&m=1048450814&s=170667a&w=0&h=s8rfKaYosNGhe-ibWfme9XgnFRuIiIGyWeZUmsCawPg=";
-    }
+    imgGameOver.src = "images/game-over.PNG";
+  }
 }
 
-function gameOverScreen () {
-    this.endImg.src = "images/istockphoto-1048450814-170667a.jpg";
-    
+function gameOverScreen() {
+  this.endImg.src = "images/istockphoto-1048450814-170667a.jpg";
 }
-
-
-  
 
 //game.start();
 
 //Começar Jogo
 window.onload = () => {
-    document.getElementById("btn-start").onclick = () => {
-      game.start();
-    };
-}
-
-
+  document.getElementById("btn-start").onclick = () => {
+    game.start();
+  };
+};
 
 //Áudios
 const crashSound = new Audio();
 crashSound.src = "sounds/mixkit-arcade-retro-game-over-213.wav";
 
-const gameOverSound = new Audio ();
-gameOverSound.src = "sounds/mixkit-falling-game-over-1942.wav"
+const gameOverSound = new Audio();
+gameOverSound.src = "sounds/mixkit-falling-game-over-1942.wav";
 
 //Comandos
 window.addEventListener("load", () => {
@@ -268,4 +258,3 @@ window.addEventListener("load", () => {
     }
   });
 });
-

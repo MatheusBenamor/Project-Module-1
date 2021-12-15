@@ -6,44 +6,54 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Projeto M1</title>
     <link rel="stylesheet" href="styles/style.css" />
-    
   </head>
   <body>
-      <header>
-        <br>
-        <br>
-        <br>
-        <div class="intro-game">
-          <img id="logo-game" src="images/logo-game.png" alt="logo">
-        </div>
-      <br>
-      <br>
-      <br>
-      <br>
-        <div>
+    <header>
+      <br />
+      <br />
+      <br />
+      <div class="intro-game">
+        <img id="main-title" src="images/png_20211215_140824_0000.png" alt="logo" />
+      </div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <div>
         <nav id="menu">
-          <h2 class="neonText"> How to play</h2>
-          <h2><a href = "about-me.html" class="neonText"> About me </a></h2>
-          
-          
+          <h2><a href="about-me.html" class="neonText"> About me </a></h2>
         </nav>
       </div>
-      </header>
+    </header>
 
-      <br>
-    
-    <section id="game-area"></section>
-
-    <div class="buttons">
-    <button type="button" id="btn-start" class="neonText">START</button>
-    <button type="button" id="btn-reset" class="neonText">RESET</button>
-  </div>
+    <br />
+    <div class="how-to-play" class="neonText">
+      <h2 id="instructions" class="neonText">How to play</h2>
+      <p id="instructions-text" >Alternate between 4 different forms in order to pass throught the obstacles by using the correspondent figure</p>
+      
+    </div>
 
     <div>
-      <EMBED class="music" SRC="sounds/561391__bloodpixelhero__game-music-time-of-action.wav" volume= "20" AUTOSTART= LOOP="TRUE"/>
+      <section id="container">
+        <img id="commands" src="images/commands.png" alt="logo" />
+        <div id="game-area"></div>>
+      </section> 
     </div>
-    
-    <script src="javascript.js"></script>
+    <div class="buttons">
+      <button type="button" id="btn-start" class="neonText">START</button>
+      <button type="button" id="btn-reset" class="neonText">RESET</button>
+    </div>
 
+    <div>
+      <embed
+        class="music"
+        src="sounds/561391__bloodpixelhero__game-music-time-of-action.wav"
+        volume="20"
+        AUTOSTART="LOOP"
+        ="TRUE"
+      />
+    </div>
+
+    <script src="javascript.js"></script>
   </body>
 </html>
