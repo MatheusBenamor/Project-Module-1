@@ -9,13 +9,7 @@
     background-color: #010a01;
   }
 
-  .intro-game {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-around;
-  }
-
-  #logo-game {
+    #logo-game {
     height: 300px;
     width: 300px;
     border-radius: 30px;
@@ -23,19 +17,15 @@
     justify-items: center;
   }
 
-  #arcade-logo {
-    height: 300px;
-    width: 300px;
-  }
-
-  #game-night {
-    height: 300px;
-    width: 350px;
+  .intro-game {
+    display: flex;
+    justify-content: center;
   }
 
   .neonText {
     animation: flicker 1.5s infinite alternate;
     color: #fff;
+    height: 50%;
   }
   
   h1 {
@@ -146,27 +136,32 @@
     line-height: 1.5;
   }
 
-  #followMe {
-    border-radius: 30px;
-    width: 600px;
-    height: 250px;
+  #footerText {
+    display: flex;
+    justify-content: center;
+    font-size: 30px;
   }
 
   .buttons{
     display: flex;
+    border-color:blueviolet;
+    border-width: thick;
     flex-direction: row;
     justify-content: center;
+    align-content: space-around;
     padding: 10px;    
   }
 
-  .btn-start {
+  #btn-start {
     height: 50px;
     width: 10%;
+    background: none;
   }
 
-  .btn-reset {
+  #btn-reset {
     height: 50px;
-    width: 10%
+    width: 10%;
+    background: none;
   }
 
   .music {
@@ -174,4 +169,11 @@
     width: 100px;
     border-radius: 30px;
     margin-left: 40px;
+  }
+
+  #mute-img {
+    height: 85px;
+    width: 120px;
+    border-radius: 50%;
+    
   }

@@ -41,7 +41,7 @@ const backgroundImage = {
     img: img,
     x: 0,
     y: -100,
-    speed: -2,
+    speed: -3,
   
     move: function() {
       this.x += this.speed;
@@ -59,21 +59,67 @@ const backgroundImage = {
   };
 
 class Component {
-  constructor(width, height, color, x, y) {
-    this.width = width;
-    this.height = height;
-    this.color = color;
+  constructor(x, y) {
+    this.currentShape = "square";
     this.posX = x;
     this.posY = y;
     this.speedX = 0;
     this.speedY = 0;
+    this.ctx = game.ctx;
     //Não preciso do speed pois minhas formas ficarão paradas
   }
 
-  update = () => {
+square = () => {
+    const height = 40;
+    const width = 40;
+    const color = "#FFFF66";
     const ctx = game.ctx;
-    ctx.fillStyle = this.color;
-    ctx.fillRect(this.posX, this.posY, this.width, this.height);
+    ctx.fillStyle = color;
+    ctx.fillRect(this.posX, this.posY, width, height);
+}
+
+    circle = () => {
+        let x = this.posX + 20;
+        let y = this.posY + 20;
+        const ctx = game.ctx;
+        ctx.beginPath();
+        ctx.fillStyle = '#50BFE6'
+        ctx.arc(x, y, 25, 0, 2 * Math.PI);
+        ctx.fill ();
+    }
+    
+    triangle = () => {
+        
+        let x = this.posX + 20;
+        let y = this.posY;
+        const ctx = game.ctx;
+        ctx.fillStyle = "green";
+        ctx.beginPath();
+        ctx.moveTo(x,y);
+        ctx.lineTo(x - 25, y + 50);
+        ctx.lineTo(x + 25,y + 50);
+        ctx.fill();
+    }
+    
+    heart = () => {
+        let x = this.posX;
+        let y = this.posY;
+        const ctx = game.ctx;
+        ctx.beginPath();
+        ctx.moveTo(x,y);
+        ctx.fillStyle = '#FF355E';
+        ctx.bezierCurveTo(x - 37.5, y - 21.5, x - 40, y - 27.5, x - 50, y - 27.5);
+        ctx.bezierCurveTo(x - 65, y - 27.5, x - 65, y - 8.75, x - 65, y - 8.75);
+        ctx.bezierCurveTo(x - 65, y, x - 55, y + 11, x - 37.5, y + 20);
+        ctx.bezierCurveTo(x - 20, y + 11, x - 10, y - 27.5, x - 25, y - 22);
+        ctx.bezierCurveTo(x - 10, y - 8.75,  x - 10, y - 27.5, x - 25, y - 27.5);
+        ctx.bezierCurveTo(x - 32.5, y - 27.5, x - 37.5, y - 21.5, x - 37.5, y - 22);
+        ctx.fill();
+    }
+
+  update = () => {
+    //if ou switch
+    this[this.currentShape]()
   };
 
   newPos = () => {
@@ -97,7 +143,7 @@ class Component {
     return this.posY + this.height;
   };
 
-  crashWith(obst) {
+  crashWith = (obst) => {
     const freeLeft = this.left() > obst.right();
     const freeRight = this.right() < obst.left();
     const freeTop = this.top() > obst.bottom();
@@ -106,9 +152,18 @@ class Component {
 }
 }
 
-const player = new Component(40, 40, "#FFFF66", 10, 210);
-const circle = new Component();
-const triangle = new Component();
+const player = new Component(10, 210);
+/*player.posX
+player["posX"]
+player.update()
+player["update"]()*/
+
+
+
+
+function checkShape() {
+    
+}
 
 
 function updateGameArea() {
@@ -122,12 +177,9 @@ function updateGameArea() {
 }
 
 function createObstacle() {
-  const posX = game.canvas.width;
-  const posY = 210;
-  const height = player.height;
-  const width = player.width;
-  const color = '#FFFF66';
-  game.obstacles.push(new Component(width, height, color, posX, posY));
+  const x = game.canvas.width;
+  const y = 180;
+  game.obstacles.push(new Component(x, y));
 }
 
 function updateObstacles () {
@@ -147,66 +199,54 @@ function checkGameOver () {
     })
     if (crashed) {
     game.stop();
+    crashSound.play();
+    game.clear();
+    gameOverSound.play();
+    const imgGameOver = new Image();
+    imgGameOver.src = "https://media.istockphoto.com/vectors/neon-inscription-of-game-over-vector-vector-id1048450814?k=20&m=1048450814&s=170667a&w=0&h=s8rfKaYosNGhe-ibWfme9XgnFRuIiIGyWeZUmsCawPg=";
     }
 }
 
-game.start();
+function gameOverScreen () {
+    this.endImg.src = "images/istockphoto-1048450814-170667a.jpg";
+    
+}
 
+
+  
+
+//game.start();
+
+//Começar Jogo
+window.onload = () => {
+    document.getElementById("btn-start").onclick = () => {
+      game.start();
+    };
+}
+
+
+
+//Áudios
+const crashSound = new Audio();
+crashSound.src = "sounds/mixkit-arcade-retro-game-over-213.wav";
+
+const gameOverSound = new Audio ();
+gameOverSound.src = "sounds/mixkit-falling-game-over-1942.wav"
+
+//Comandos
 window.addEventListener("load", () => {
   document.addEventListener("keydown", (e) => {
     switch (e.key) {
       case "a":
-        player.color = "red";
+        player.currentShape = "square";
         break;
       case "s":
-        player.color = "yellow";
+        player.currentShape = "circle";
         break;
       case "d":
-        player.color = "blue";
+        player.currentShape = "triangle";
         break;
     }
   });
 });
 
-//class Formas {
-
-//fazer método para cada um
-//método draw e fazer 1 por 1
-
-/*//Forma Círculo
-    ctx.beginPath();
-    ctx.fillStyle = '#50BFE6'
-    ctx.arc(150, 150, 25, 0, 2 * Math.PI);
-    ctx.fill ();
-    ctx.stroke();
-
-    //Forma quadrado
-    ctx.fillStyle = '#FFFF66';
-    ctx.fillRect(75, 40, 40, 40);
-
-    //Forma Coração
-    ctx.beginPath();
-    ctx.moveTo(75,40);
-    ctx.fillStyle = '#FF355E';
-    ctx.bezierCurveTo(37.5,18.5,35,12.5,25,12.5);
-    ctx.bezierCurveTo(10,12.5,10,31.25,10,31.25);
-    ctx.bezierCurveTo(10,40,20,51,37.5,60);
-    ctx.bezierCurveTo(55,51,65,40,65,31.25);
-    ctx.bezierCurveTo(65,31.25,65,12.5,50,12.5);
-    ctx.bezierCurveTo(42.5,12.5,37.5,18.5,37.5,18);
-    ctx.fill();
-
-    //Forma Triângulo
-    ctx.fillStyle = "green";
-    ctx.beginPath();
-    ctx.moveTo(75,50);
-    ctx.lineTo(50,100);
-    ctx.lineTo(100,100);
-    ctx.fill();
-    
-
-    //Obstáculo quadrado
-    ctx.strokeStyle = '#FFFF66'
-    ctx.rect(220, 20, 40, 40);
-    ctx.stroke();
-    */
