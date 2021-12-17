@@ -1,7 +1,9 @@
 //Botão Start
 window.onload = () => {
   document.getElementById("btn-start").onclick = () => {
+    if(!game.gameStarted){
     game.start();
+}
   };
   document.getElementById("btn-reset").onclick = () => {
     restart();
@@ -42,8 +44,10 @@ class Game {
     this.obstacles = [];
     this.points = 0;
     this.speed = 3;
+    this.gameStarted = false;
   }
   start = () => {
+    this.gameStarted = true;
     this.canvas.width = 626;
     this.canvas.height = 300;
     this.ctx = this.canvas.getContext("2d");
@@ -271,17 +275,20 @@ function selectRandomWall() {
 
 //Muda a velocidade depois de atingir um N de pontos
 function speeder() {
-  if (game.points === 100) {
+  if (game.points === 150) {
     game.speed = 12;
   }
-  if (game.points === 200) {
+  if (game.points === 300) {
     game.speed = 20;
+  }
+  if (game.points === 500) {
+      game.speed = 26;
   }
 }
 
 //Jogo termina quando ganha 1.000 pontos
 function winner() {
-  if (game.points === 1000) {
+  if (game.points === 700) {
     const winnerImg = new Image();
     winnerImg.src = "images/you-win.jpg";
     clearInterval(game.interval);

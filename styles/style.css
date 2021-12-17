@@ -28,6 +28,7 @@ body {
   border-radius: 10px;
   display: flex;
   justify-items: center;
+  margin-left: 10%;
 }
 
 .intro-game {
@@ -177,6 +178,7 @@ h2 {
   justify-content: center;
   align-content: space-around;
   padding: 10px;
+  margin-right: 16%;
 }
 
 #btn-start {
