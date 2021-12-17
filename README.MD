@@ -1,7 +1,8 @@
 # Don't Hit the Wall 
 ## Module 1 Game Project
 
-This game is my final M1 project, i hope you all enjoyed it! 
+This game is my final M1 project, i hope you all enjoyed it!
+Deploy link: https://matheusbenamor.github.io/Project-Module-1/ 
 
 > Ironhack 
 >Web Development

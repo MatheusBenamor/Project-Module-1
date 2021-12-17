@@ -35,6 +35,9 @@ window.onload = () => {
   const gameOverSound = new Audio();
   gameOverSound.src = "sounds/mixkit-falling-game-over-1942.wav";
 
+  const winSound = new Audio();
+  winSound.src = "sounds/win-sound.wav"
+  
 class Game {
   constructor() {
     this.canvas = document.createElement("canvas");
@@ -216,9 +219,11 @@ class Wall {
 
   triangleWall = () => {
     this.img = triangleWall;
+    this.shape = "triangle"
   };
   heartWall = () => {
     this.img = heartWall;
+    this.shape = "heart"
   };
   draw() {
     game.ctx.drawImage(this.img, this.posX, this.posY);
@@ -228,13 +233,13 @@ class Wall {
   }
 }
 
-let chooseWall = "";
-
+//Criando as paredes
 function createWall() {
 const wall = new Wall (game.canvas.width, 150, selectRandomWall())
 game.obstacles.push(wall)
 }
 
+//Atualizando as paredes
 function updateWalls() {
     game.frames += 1;
 if (game.frames % 120 === 0) {
@@ -246,6 +251,7 @@ for (let obstacle of game.obstacles) {
 }
 }
 
+//Faz com que as paredes venham de forma aleatória
 function selectRandomWall () {
     const wallTypes = ["squareWall", "circleWall", "triangleWall", "heartWall"];
     let randomWall = wallTypes[Math.floor(Math.random() * wallTypes.length)];
@@ -253,16 +259,40 @@ function selectRandomWall () {
     return chooseWall;
 }
 
-/*function selectWall () {
-    let chooseWall = selectRandomWall(game.obstacles);
-    return chooseWall;
-}*/
-
+//Muda a velocidade depois de atingir um N de pontos
 function speeder () {
     if (game.points === 100) {
     game.speed = 12;
     }
+    if (game.points === 200){
+    game.speed = 20;
+    }
 }  
+
+//Jogo termina quando ganha 1.000 pontos
+function winner () {
+    if (game.points === 1000) {
+        const winnerImg = new Image()
+        winnerImg.src = "images/you-win.jpg"
+        clearInterval(game.interval)
+        game.clear()
+        winnerImg.onload = function() {
+        game.ctx.drawImage(winnerImg, 0, 0)
+        }
+        console.log(winnerImg)
+        winSound.play();
+        }
+    }
+
+    /*function gameOverScreen () {
+        if (checkGameOver()) {
+        clearInterval(game.interval)
+        game.clear()
+        ctx.drawImage(gameOverImg, 0, 0)
+        console.log(gameOverImg)
+        }
+    }*/
+    
 
 /*function restart () {
     game.clear();
@@ -285,12 +315,34 @@ function updateGameArea() {
   player.update();
   speeder();
   game.score();
-  checkGameOver();
+  checkColision ();
+  winner();
+  //checkGameOver();
 }
 
+//Verifica a colisão
+function checkColision () {
+    game.obstacles.forEach((obstacle) => {
+    const crashed = player.crashWith(obstacle);
+    console.log(crashed)
+    if (crashed) {
+    console.log("bateu!");
+    //checkShape();
+    }    
+  });
+}
+ 
+//Checa a colisão para ver se passa ou não
+/*function checkShape () {
+    if (game.player.currentShape === Wall.shape) {
+        continue; 
+    } else {
+        checkGameOver();
+        }
+    }*/
+
+
 /*function checkColision {
-    para cada parametro ele verifca se o current shape é igual ao shape do obstaculo, se for igual passa se não game over
-    se for true continua
 1)Race car detectar colisão preciso da right
 posição das figuras
     let formX = player.posX;
@@ -302,8 +354,12 @@ posição das figuras
     let squareSize = Wall."squareWall".width;
     let circleSize = Wall.""
     let triangleSize = 
+
+
     
 2) se bateu, Verificar se as imagens são iguais
+ para cada parametro ele verifica se o current shape é igual ao shape do obstaculo, se for igual passa se não game over
+    se for true continua
     if ( > player.currentShape = "square" {
         continue
     } else {
@@ -312,18 +368,18 @@ posição das figuras
 }*/
 
 
-function checkGameOver() {
+/*function checkGameOver() {
   const crashed = game.obstacles.some((obstacle) => {
     return player.crashWith(obstacle);
   });
   if (crashed) {
     game.stop();
     crashSound.play();
-    game.clear();
     gameOverSound.play();
+    game.clear();
     img = gameOverImg;
   }
-}
+}*/
 
 
 //game.start();
