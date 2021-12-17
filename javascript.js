@@ -1,43 +1,40 @@
 //Botão Start
 window.onload = () => {
-    document.getElementById("btn-start").onclick = () => {
-      game.start();
-    };
+  document.getElementById("btn-start").onclick = () => {
+    game.start();
   };
+  document.getElementById("btn-reset").onclick = () => {
+    restart();
+  };
+};
 
-//Botão Restart
-/*window.onload = () => {
-    document.getElementById("btn-reset").onclick = () => {
-      restart();
-    };
-  }*/
 
-  //Imagens
-  const squareWall = new Image();
-  squareWall.src = "images/wall.square.png";
-  
-  const triangleWall = new Image();
-  triangleWall.src = "images/wall.triangle.png";
-  
-  const circleWall = new Image();
-  circleWall.src = "images/wall.circle.png";
-  
-  const heartWall = new Image();
-  heartWall.src = "images/wall.heart.png";
-  
-  const gameOverImg = new Image();
-  gameOverImg.src = "images/game-over.PNG"
-  
-  //Áudios
-  const crashSound = new Audio();
-  crashSound.src = "sounds/mixkit-arcade-retro-game-over-213.wav";
-  
-  const gameOverSound = new Audio();
-  gameOverSound.src = "sounds/mixkit-falling-game-over-1942.wav";
+//Imagens
+const squareWall = new Image();
+squareWall.src = "images/wall.square.png";
 
-  const winSound = new Audio();
-  winSound.src = "sounds/win-sound.wav"
-  
+const triangleWall = new Image();
+triangleWall.src = "images/wall.triangle.png";
+
+const circleWall = new Image();
+circleWall.src = "images/wall.circle.png";
+
+const heartWall = new Image();
+heartWall.src = "images/wall.heart.png";
+
+const gameOverImg = new Image();
+gameOverImg.src = "images/game-over.PNG";
+
+//Áudios
+const crashSound = new Audio();
+crashSound.src = "sounds/mixkit-arcade-retro-game-over-213.wav";
+
+const gameOverSound = new Audio();
+gameOverSound.src = "sounds/mixkit-falling-game-over-1942.wav";
+
+const winSound = new Audio();
+winSound.src = "sounds/win-sound.wav";
+
 class Game {
   constructor() {
     this.canvas = document.createElement("canvas");
@@ -69,6 +66,20 @@ class Game {
     this.ctx.textAlign = "end";
     this.ctx.fillStyle = "white";
     this.ctx.fillText(`Score: ${this.points}`, this.canvas.width - 30, 50);
+  };
+
+  gameOver = () => {
+    this.stop();
+    crashSound.play();
+    gameOverSound.play();
+    this.clear();
+    this.ctx.drawImage(
+      gameOverImg,
+      0,
+      0,
+      this.canvas.width,
+      this.canvas.height
+    );
   };
 }
 
@@ -207,23 +218,23 @@ class Wall {
     this[currentWall]();
   }
 
-  squareWall = () => {
+  square = () => {
     this.img = squareWall;
     this.shape = "square";
- };
+  };
 
-  circleWall = () => {
+  circle = () => {
     this.img = circleWall;
-    this.shape = "circle"
+    this.shape = "circle";
   };
 
-  triangleWall = () => {
+  triangle = () => {
     this.img = triangleWall;
-    this.shape = "triangle"
+    this.shape = "triangle";
   };
-  heartWall = () => {
+  heart = () => {
     this.img = heartWall;
-    this.shape = "heart"
+    this.shape = "heart";
   };
   draw() {
     game.ctx.drawImage(this.img, this.posX, this.posY);
@@ -235,76 +246,64 @@ class Wall {
 
 //Criando as paredes
 function createWall() {
-const wall = new Wall (game.canvas.width, 150, selectRandomWall())
-game.obstacles.push(wall)
+  const wall = new Wall(game.canvas.width, 150, selectRandomWall());
+  game.obstacles.push(wall);
 }
 
 //Atualizando as paredes
 function updateWalls() {
-    game.frames += 1;
-if (game.frames % 120 === 0) {
+  game.frames += 1;
+  if (game.frames % 120 === 0) {
     createWall();
-}
-for (let obstacle of game.obstacles) {
+  }
+  for (let obstacle of game.obstacles) {
     obstacle.move();
     obstacle.draw();
-}
+  }
 }
 
 //Faz com que as paredes venham de forma aleatória
-function selectRandomWall () {
-    const wallTypes = ["squareWall", "circleWall", "triangleWall", "heartWall"];
-    let randomWall = wallTypes[Math.floor(Math.random() * wallTypes.length)];
-    let chooseWall = (`${randomWall}`);
-    return chooseWall;
+function selectRandomWall() {
+  const wallTypes = ["square", "circle", "triangle", "heart"];
+  let randomWall = wallTypes[Math.floor(Math.random() * wallTypes.length)];
+  return randomWall;
 }
 
 //Muda a velocidade depois de atingir um N de pontos
-function speeder () {
-    if (game.points === 100) {
+function speeder() {
+  if (game.points === 100) {
     game.speed = 12;
-    }
-    if (game.points === 200){
+  }
+  if (game.points === 200) {
     game.speed = 20;
-    }
-}  
+  }
+}
 
 //Jogo termina quando ganha 1.000 pontos
-function winner () {
-    if (game.points === 1000) {
-        const winnerImg = new Image()
-        winnerImg.src = "images/you-win.jpg"
-        clearInterval(game.interval)
-        game.clear()
-        winnerImg.onload = function() {
-        game.ctx.drawImage(winnerImg, 0, 0)
-        }
-        console.log(winnerImg)
-        winSound.play();
-        }
-    }
-
-    /*function gameOverScreen () {
-        if (checkGameOver()) {
-        clearInterval(game.interval)
-        game.clear()
-        ctx.drawImage(gameOverImg, 0, 0)
-        console.log(gameOverImg)
-        }
-    }*/
-    
-
-/*function restart () {
+function winner() {
+  if (game.points === 1000) {
+    const winnerImg = new Image();
+    winnerImg.src = "images/you-win.jpg";
+    clearInterval(game.interval);
     game.clear();
-    const player = new Component(10, 210);
-    player.update();
+    winnerImg.onload = function () {
+      game.ctx.drawImage(winnerImg, 0, 0);
+    };
+    console.log(winnerImg);
+    winSound.play();
+  }
+}
+
+function restart () {
+    game.clear();
+    clearInterval(game.interval)
+    player.currentShape = "heart";
     game.obstacles = [];
-    updateWalls();
     game.frames = 0;
     game.points = 0;
     game.speed = 3;
     game.start();
-}*/
+}
 
 function updateGameArea() {
   game.clear();
@@ -315,76 +314,29 @@ function updateGameArea() {
   player.update();
   speeder();
   game.score();
-  checkColision ();
+  checkColision();
   winner();
-  //checkGameOver();
+  
 }
 
 //Verifica a colisão
-function checkColision () {
-    game.obstacles.forEach((obstacle) => {
-    const crashed = player.crashWith(obstacle);
-    console.log(crashed)
+function checkColision() {
+  game.obstacles.forEach((wall, index) => {
+    const crashed = wall.posX < -10;
     if (crashed) {
-    console.log("bateu!");
-    //checkShape();
-    }    
+      game.obstacles.splice(index, 1);
+      console.log("bateu!");
+      checkShape(wall);
+    }
   });
 }
- 
+
 //Checa a colisão para ver se passa ou não
-/*function checkShape () {
-    if (game.player.currentShape === Wall.shape) {
-        continue; 
-    } else {
-        checkGameOver();
-        }
-    }*/
-
-
-/*function checkColision {
-1)Race car detectar colisão preciso da right
-posição das figuras
-    let formX = player.posX;
-    let formY = player.posY;
-
-    posição x da figura com o final da parede, quando eles forem iguais faz a colisão
-    let wallX = Wall.posX;
-    let wallY = Wall.posY;
-    let squareSize = Wall."squareWall".width;
-    let circleSize = Wall.""
-    let triangleSize = 
-
-
-    
-2) se bateu, Verificar se as imagens são iguais
- para cada parametro ele verifica se o current shape é igual ao shape do obstaculo, se for igual passa se não game over
-    se for true continua
-    if ( > player.currentShape = "square" {
-        continue
-    } else {
-        checkGameOver();
-    }
-}*/
-
-
-/*function checkGameOver() {
-  const crashed = game.obstacles.some((obstacle) => {
-    return player.crashWith(obstacle);
-  });
-  if (crashed) {
-    game.stop();
-    crashSound.play();
-    gameOverSound.play();
-    game.clear();
-    img = gameOverImg;
+function checkShape(wall) {
+  if (player.currentShape !== wall.currentWall) {
+    game.gameOver();
   }
-}*/
-
-
-//game.start();
-
-
+}
 
 //Comandos
 window.addEventListener("load", () => {
