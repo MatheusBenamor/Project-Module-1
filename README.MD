@@ -1,4 +1,8 @@
-# Don't Hit the Wall 
+# Don't Hit the Wall
+
+
+<img src="https://res.cloudinary.com/dqycgj4fq/image/upload/v1654275610/4_me4xqj.png" alt="GAME COVER" />
+
 ## Module 1 Game Project
 
 This game is my final M1 project, i hope you all enjoyed it!
